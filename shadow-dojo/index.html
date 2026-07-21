@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech Kurushetra — Shadow Dojo</title>
+  <meta name="description" content="Meet the elite forces of Tech Kurushetra inside the Shadow Dojo: Social Media, PR, Web Dev, Video, and Graphics departments, styled inside weightless floating pagodas.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Yuji+Syuku&family=Shippori+Mincho:wght@500;600;800&family=Noto+Sans+JP:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Custom Ninja Cursor -->
+  <div id="cursor">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <!-- Sharp quad-point shuriken -->
+      <path d="M50 5 L55 35 L85 45 L55 55 L50 85 L45 55 L15 45 L45 35 Z"
+            fill="#c5394b" stroke="#1f1a1a" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="50" cy="50" r="8" fill="#1f1a1a"/>
+      <!-- Inner core line -->
+      <circle cx="50" cy="50" r="4" fill="#f9f6f0"/>
+    </svg>
+  </div>
+  <div id="cursor-trail"></div>
+
+  <!-- Strike / Slash Canvas Overlay -->
+  <canvas id="strike-canvas"></canvas>
+
+  <!-- Gooey Background Gradient Container -->
+  <div class="gooey-bg-container">
+    <div class="g-blob blob-1"></div>
+    <div class="g-blob blob-2"></div>
+    <div class="g-blob blob-3"></div>
+  </div>
+
+  <!-- Ambient / Embers Canvas Background -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Floating Fog Layers -->
+  <div class="fog fog-1"></div>
+  <div class="fog fog-2"></div>
+  <div class="fog fog-3"></div>
+
+  <!-- HTML Floating Embers -->
+  <div id="embers-layer" aria-hidden="true"></div>
+
+  <!-- Hero Header -->
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">テック クルシェトラ — Tech Kurushetra</span>
+      <h1 class="kanji-hero">戦</h1>
+      <h2 class="title">TECH <span>KURUSHETRA</span></h2>
+      <p class="tagline">The elite chambers of Tech Kurushetra. Weightless in the void. Bound by fire.</p>
+      <div class="scroll-cue">▼ descend to chambers</div>
+    </div>
+  </header>
+
+  <!-- Departments Container -->
+  <main class="chambers">
+
+    <!-- ── 1. SOCIAL MEDIA CHAMBER ── -->
+    <section class="chamber-section reveal" id="chamber-social">
+      <p class="section-label">第一の間 — <b>Social Media Chamber</b></p>
+      <div class="members-grid">
+        
+        <!-- Member 1 -->
+        <div class="member-card" data-float-seed="0">
+          <div class="torii-frame">
+            <img class="torii-image" src="torii-placeholder-clean.png" alt="Torii Gate Frame">
+            <div class="portrait-symbol-container">
+              <span class="portrait-symbol">伝</span>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4>Kaze Whisperer</h4>
+            <p>Lead Strategist</p>
+          </div>
+        </div>
+
+        <!-- Member 2 -->
+        <div class="member-card" data-float-seed="1">
+          <div class="torii-frame">
+            <img class="torii-image" src="torii-placeholder-clean.png" alt="Torii Gate Frame">
+            <div class="portrait-symbol-container">
+              <span class="portrait-symbol">影</span>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4>Shadow Scribe</h4>
+            <p>Content Specialist</p>
+          </div>
+        </div>
+
+        <!-- Member 3 -->
+        <div class="member-card" data-float-seed="2">
+          <div class="torii-frame">
+            <img class="torii-image" src="torii-placeholder-clean.png" alt="Torii Gate Frame">
+            <div class="portrait-symbol-container">
+              <span class="portrait-symbol">響</span>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4>Echo Phantom</h4>
+            <p>Community Ranger</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── 2. PUBLIC RELATIONS CHAMBER ── -->
+    <section class="chamber-section reveal" id="chamber-pr">
+      <p class="section-label">第二の間 — <b>Public Relations Chamber</b></p>
+      <div class="members-grid">
+        
+        <!-- Member 1 -->
+        <div class="member-card" data-float-seed="3">
+          <div class="torii-frame">
+            <img class="torii-image" src="torii-placeholder-clean.png" alt="Torii Gate Frame">
+            <div class="portrait-symbol-container">
+              <span class="portrait-symbol">声</span>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4>Hana Commander</h4>
+            <p>PR Director</p>
+          </div>
+        </div>
+
+        <!-- Member 2 -->
+        <div class="member-card" data-float-seed="4">
+          <div class="torii-frame">
+            <img class="torii-image" src="torii-placeholder-clean.png" alt="Torii Gate Frame">
+            <div class="portrait-symbol-container">
+              <span class="portrait-symbol">書</span>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4>Scroll Messenger</h4>
+            <p>Liaison Agent</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── 3. WEB DEVELOPMENT CHAMBER ── -->
+    <section class="chamber-section reveal" id="chamber-web">
+      <p class="section-label">第三の間 — <b>Web Development Chamber</b></p>
+      <div class="members-grid">
+        
+        <!-- Member 1 -->
+        <div class="member-card" data-float-seed="5">
+          <div class="torii-frame">
+            <img class="torii-image" src="torii-placeholder-clean.png" alt="Torii Gate Frame">
+            <div class="portrait-symbol-container">
+              <span class="portrait-symbol">築</span>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4>Kai Genki</h4>
+            <p>Lead Architect</p>
+          </div>
+        </div>
+
+        <!-- Member 2 -->
+        <div class="member-card" data-float-seed="6">
+          <div class="torii-frame">
+            <img class="torii-image" src="torii-placeholder-clean.png" alt="Torii Gate Frame">
+            <div class="portrait-symbol-container">
+              <span class="portrait-symbol">術</span>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4>Ashi Zora</h4>
+            <p>Frontend Shinobi</p>
+          </div>
+        </div>
+
+        <!-- Member 3 -->
+        <div class="member-card" data-float-seed="7">
+          <div class="torii-frame">
+            <img class="torii-image" src="torii-placeholder-clean.png" alt="Torii Gate Frame">
+            <div class="portrait-symbol-container">
+              <span class="portrait-symbol">霊</span>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4>Yoru Bane</h4>
+            <p>Database Phantom</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── 4. VIDEO EDITING CHAMBER ── -->
+    <section class="chamber-section reveal" id="chamber-video">
+      <p class="section-label">第四の間 — <b>Video Editing Chamber</b></p>
+      <div class="members-grid">
+        
+        <!-- Member 1 -->
+        <div class="member-card" data-float-seed="8">
+          <div class="torii-frame">
+            <img class="torii-image" src="torii-placeholder-clean.png" alt="Torii Gate Frame">
+            <div class="portrait-symbol-container">
+              <span class="portrait-symbol">斬</span>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4>Void Kira</h4>
+            <p>Frame Cutter</p>
+          </div>
+        </div>
+
+        <!-- Member 2 -->
+        <div class="member-card" data-float-seed="9">
+          <div class="torii-frame">
+            <img class="torii-image" src="torii-placeholder-clean.png" alt="Torii Gate Frame">
+            <div class="portrait-symbol-container">
+              <span class="portrait-symbol">幻</span>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4>Shiro Haze</h4>
+            <p>VFX Shadow</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── 5. GRAPHICS CHAMBER ── -->
+    <section class="chamber-section reveal" id="chamber-gfx">
+      <p class="section-label">第五の間 — <b>Graphics Chamber</b></p>
+      <div class="members-grid">
+        
+        <!-- Member 1 -->
+        <div class="member-card" data-float-seed="10">
+          <div class="torii-frame">
+            <img class="torii-image" src="torii-placeholder-clean.png" alt="Torii Gate Frame">
+            <div class="portrait-symbol-container">
+              <span class="portrait-symbol">墨</span>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4>Ink Kuro</h4>
+            <p>Brush Master</p>
+          </div>
+        </div>
+
+        <!-- Member 2 -->
+        <div class="member-card" data-float-seed="11">
+          <div class="torii-frame">
+            <img class="torii-image" src="torii-placeholder-clean.png" alt="Torii Gate Frame">
+            <div class="portrait-symbol-container">
+              <span class="portrait-symbol">画</span>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4>Fuji Nori</h4>
+            <p>Pixel Assassin</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Interactive CTA Section -->
+  <section class="cta reveal">
+    <p class="cta-line">The void accepts your presence.</p>
+    <h3 class="cta-line-2">Vanish or Train.</h3>
+    <button class="begin-btn">Strike to Begin</button>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    TECH KURUSHETRA — SHADOW DOJO. Move cursor to disturb the embers. Click anywhere to perform a ninja slash.
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

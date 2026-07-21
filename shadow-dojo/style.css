@@ -1,0 +1,538 @@
+/* ═══════════════════════════════════════════════════════════════
+   STYLE.CSS — Shadow Dojo Immersive Anti-Gravity Team Page
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --void: #f8f3e6; /* Cream off-white */
+  --ink: #e3dece;
+  --ink-2: #d6d0bf;
+  --paper: #2c2a26; /* Charcoal */
+  --mist: #6c6a66;
+  --mist-dim: #9c9a96;
+  
+  /* Retro Palette */
+  --blood: #b83324;
+  --blood-bright: #d54536; /* Vermilion */
+  --fire-orange: #e65c00;
+  --fire-yellow: #d99a00;
+  --gold: #3c563e; /* Forest Green */
+  
+  --line: rgba(44, 42, 38, 0.12);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--void);
+  background-image: url('bg-landscape.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: var(--paper);
+  font-family: 'Noto Sans JP', sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Hide default cursor on devices that support hover */
+@media (hover: hover) and (pointer: fine) {
+  body, a, button {
+    cursor: none;
+  }
+}
+
+::selection {
+  background: var(--blood);
+  color: var(--paper);
+}
+
+/* ══════════════════════════════════════
+   CUSTOM NINJA CURSOR
+══════════════════════════════════════ */
+#cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 32px; height: 32px;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  display: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  #cursor { display: block; }
+}
+#cursor svg {
+  width: 100%; height: 100%;
+  filter: drop-shadow(0 0 8px rgba(197, 57, 75, 0.7));
+}
+#cursor.click svg {
+  animation: spin-fast 0.4s linear;
+}
+@keyframes spin-fast {
+  to { transform: rotate(360deg); }
+}
+
+/* Cursor Trail */
+#cursor-trail {
+  position: fixed;
+  top: 0; left: 0;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--fire-orange);
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  filter: blur(2px);
+  opacity: 0;
+  display: none;
+  will-change: transform;
+}
+@media (hover: hover) and (pointer: fine) {
+  #cursor-trail { display: block; opacity: 0.65; }
+}
+
+/* ══════════════════════════════════════
+   CANVAS & ATMOSPHERE
+══════════════════════════════════════ */
+#bg-canvas {
+  position: fixed; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Gooey Background Gradient Container */
+.gooey-bg-container {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--void);
+  opacity: 0.85;
+}
+
+.g-blob {
+  position: absolute;
+  border-radius: 50%;
+  mix-blend-mode: multiply; /* Changed to multiply for light theme */
+  will-change: transform;
+  filter: blur(60px); /* Scaled down blur to match smaller radius */
+}
+
+.blob-1 {
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(197, 57, 75, 0.42), transparent 70%);
+  top: 0;
+  left: 0;
+}
+
+.blob-2 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 122, 0, 0.32), transparent 70%);
+  top: 0;
+  left: 0;
+}
+
+.blob-3 {
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(179, 146, 95, 0.28), transparent 70%);
+  top: 0;
+  left: 0;
+}
+
+#strike-canvas {
+  position: fixed; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 9995;
+  pointer-events: none;
+}
+
+/* Fog Parallax */
+.fog {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+  opacity: 0.45;
+}
+.fog-1 { width: 60vw; height: 60vw; top: -10vw; left: -10vw; background: radial-gradient(circle, rgba(197,57,75,0.15), transparent 70%); mix-blend-mode: multiply; }
+.fog-2 { width: 50vw; height: 50vw; bottom: -10vw; right: -10vw; background: radial-gradient(circle, rgba(230,92,0,0.1), transparent 70%); mix-blend-mode: multiply; }
+.fog-3 { width: 45vw; height: 45vw; top: 40vh; left: 30vw; background: radial-gradient(circle, rgba(150,140,130,0.15), transparent 70%); mix-blend-mode: multiply; }
+
+/* DOM Embers Layer */
+#embers-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.ember-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: ember-float linear infinite;
+}
+@keyframes ember-float {
+  0%   { opacity: 0; transform: translateY(0) translateX(0) scale(1); }
+  10%  { opacity: 1; }
+  85%  { opacity: 0.65; }
+  100% { opacity: 0; transform: translateY(-110vh) translateX(var(--drift)) scale(0.4); }
+}
+
+/* ══════════════════════════════════════
+   HERO / HEADER
+══════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 6vh 6vw;
+  position: relative;
+  z-index: 1;
+}
+.hero-inner {
+  max-width: 900px;
+  opacity: 0;
+  animation: rise 1.2s ease forwards 0.2s;
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: 'Noto Sans JP', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  color: var(--mist);
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+  padding: 0.6em 1.2em;
+  border-radius: 2px;
+  margin-bottom: 2.2rem;
+}
+
+.kanji-hero {
+  font-family: 'Yuji Syuku', serif;
+  font-size: clamp(6rem, 20vw, 14rem);
+  line-height: 0.85;
+  color: var(--blood-bright);
+  text-shadow: 8px 8px 0px var(--paper);
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: clamp(3rem, 7vw, 5rem);
+  letter-spacing: 0.05em;
+  color: var(--paper);
+  text-transform: uppercase;
+}
+.title span { color: var(--blood-bright); }
+
+.tagline {
+  margin-top: 1.4rem;
+  color: var(--mist);
+  font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+  letter-spacing: 0.04em;
+}
+
+.scroll-cue {
+  margin-top: 4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--mist-dim);
+  animation: bob 2.4s ease-in-out infinite;
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50% { transform: translateY(8px); opacity: 1; }
+}
+
+/* ══════════════════════════════════════
+   CHAMBERS / DEPARTMENTS
+══════════════════════════════════════ */
+.chambers {
+  position: relative;
+  z-index: 1;
+}
+
+.chamber-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10vh 6vw 12vh;
+}
+.chamber-section + .chamber-section {
+  border-top: 1px solid var(--line);
+}
+
+.section-label {
+  font-family: 'Noto Sans JP', 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--mist-dim);
+  text-align: center;
+  margin-bottom: 4.5rem;
+}
+.section-label b { color: var(--gold); font-style: normal; }
+
+/* Grid of pagodas */
+.members-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3.5rem 2.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ══════════════════════════════════════
+   PAGODA FRAME CARD (ANTI-GRAVITY ANCHOR)
+══════════════════════════════════════ */
+.member-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6rem;
+  position: relative;
+  will-change: transform;
+  transition: filter 0.3s ease;
+}
+.member-card:hover {
+  filter: drop-shadow(0 0 24px rgba(255,122,0,0.22));
+}
+
+/* 1. Torii Gate Frame */
+.torii-frame {
+  position: relative;
+  width: 440px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.2rem auto;
+}
+.torii-image {
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.4s ease, filter 0.4s ease;
+  filter: drop-shadow(0 15px 25px rgba(44, 42, 38, 0.15));
+}
+.member-card:hover .torii-image {
+  transform: scale(1.05);
+}
+
+.portrait-symbol-container {
+  position: absolute;
+  top: 76px;          /* just below the crossbeam */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+
+  width: 120px;
+  height: 157px;
+  background-image: url('cat-portrait.jpg');
+  background-size: cover;
+  background-position: center top;
+  border-radius: 2px;
+}
+
+.portrait-symbol {
+  display: none; /* Hide the old Kanji text */
+}
+
+.member-card:hover .portrait-symbol {
+  color: var(--blood-bright);
+  transform: scale(0.95);
+}
+
+/* Member Details */
+.member-info {
+  text-align: center;
+}
+.member-info h4 {
+  font-family: 'Shippori Mincho', serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--paper);
+  letter-spacing: 0.06em;
+  margin-bottom: 0.25rem;
+}
+.member-info p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mist-dim);
+}
+
+/* ══════════════════════════════════════
+   SLASH CLICK MARKS
+══════════════════════════════════════ */
+.slash-mark {
+  position: fixed;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--paper) 15%, var(--blood-bright) 50%, var(--paper) 85%, transparent);
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.95;
+  transform-origin: left center;
+  animation: slash-fade 0.45s ease-out forwards;
+}
+.slash-mark-2 {
+  position: fixed;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--fire-orange) 20%, var(--fire-yellow) 50%, transparent);
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.9;
+  transform-origin: left center;
+  animation: slash-fade 0.3s ease-out forwards;
+}
+@keyframes slash-fade {
+  0%   { opacity: 0.95; filter: brightness(1.4); }
+  100% { opacity: 0;    filter: brightness(1); }
+}
+
+/* ══════════════════════════════════════
+   REVEAL ON SCROLL
+══════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ══════════════════════════════════════
+   CTA & FOOTER
+══════════════════════════════════════ */
+.cta {
+  text-align: center;
+  padding: 10vh 6vw 12vh;
+}
+.cta-line {
+  color: var(--mist);
+  font-size: 1.1rem;
+}
+.cta-line-2 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  margin: 0.4rem 0 2.4rem;
+  color: var(--paper);
+}
+
+.begin-btn {
+  background: transparent;
+  border: 1px solid var(--blood-bright);
+  color: var(--paper);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  padding: 1rem 2.4rem;
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.35s ease;
+  z-index: 1;
+}
+.begin-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--blood-bright);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(.2,.8,.2,1);
+  z-index: -1;
+}
+.begin-btn:hover {
+  color: var(--void);
+}
+.begin-btn:hover::before {
+  transform: scaleX(1);
+}
+
+footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 3rem 6vw 4rem;
+  color: var(--mist-dim);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  border-top: 1px solid var(--line);
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVENESS
+══════════════════════════════════════ */
+@media (max-width: 640px) {
+  .members-grid {
+    gap: 3rem 1.5rem;
+  }
+  .temple-frame {
+    width: 180px;
+  }
+  .roof-top {
+    border-left-width: 54px;
+    border-right-width: 54px;
+    border-bottom-width: 26px;
+  }
+  .roof-mid {
+    border-left-width: 78px;
+    border-right-width: 78px;
+    border-bottom-width: 34px;
+  }
+  .roof-mid::before { left: -78px; bottom: -34px; }
+  .roof-mid::after  { right: -78px; bottom: -34px; }
+  .temple-body {
+    width: 154px;
+  }
+  .temple-pillar {
+    width: 14px;
+  }
+  .portrait-window {
+    height: 190px;
+  }
+  .portrait-symbol {
+    font-size: 2.8rem;
+  }
+  .temple-steps {
+    border-left-width: 14px;
+    border-right-width: 14px;
+  }
+  .temple-steps::after {
+    left: -20px;
+    right: -20px;
+  }
+}

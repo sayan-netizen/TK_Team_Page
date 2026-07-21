@@ -1,0 +1,9 @@
+{
+  "name": "shadow-dojo-project",
+  "version": "1.0.0",
+  "description": "Immersive Japanese Ninja themed team and landing page",
+  "scripts": {
+    "dev": "npx http-server ./shadow-dojo -o -p 3000"
+  },
+  "dependencies": {}
+}
