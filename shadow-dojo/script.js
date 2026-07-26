@@ -465,35 +465,62 @@
     });
   }
 
+  let isClicking = false;
+
   function spawnSlash(x, y) {
-    const count = REDUCE_MOTION ? 0 : 35;
+    if (REDUCE_MOTION) return;
+
+    // 1. Katana Blade Slashes (sharp diagonal strike rays)
+    for (let k = 0; k < 2; k++) {
+      const baseAngle = k === 0 ? -0.7 : 0.7; // Opposing diagonal angles
+      const angle = baseAngle + rand(-0.25, 0.25);
+      slashes.push({
+        x, y,
+        angle,
+        length: rand(30, 50),
+        maxLength: rand(110, 160),
+        width: rand(3.5, 6),
+        life: 1.0,
+        decay: rand(0.05, 0.08)
+      });
+    }
+
+    // 2. High-energy Spark Burst
+    const count = 60;
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2;
-      const speed = rand(3, 9);
+      const speed = rand(4, 14);
       sparks.push({
         x, y,
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed,
         life: 1.0,
-        decay: rand(0.015, 0.04),
-        r: rand(0.6, 1.8)
+        decay: rand(0.02, 0.045),
+        r: rand(1.0, 2.8),
+        color: Math.random() < 0.45 ? '255, 215, 0' : (Math.random() < 0.5 ? '255, 90, 20' : '230, 40, 20')
       });
     }
   }
 
   window.addEventListener('mousedown', (e) => {
+    isClicking = true;
     spawnSlash(e.clientX, e.clientY);
+  });
+  window.addEventListener('mouseup', () => {
+    isClicking = false;
   });
 
   function tickFx() {
-    // 1. Update DOM Cursor
+    // 1. Update DOM Cursor with Click Scale Pulse
     const vel = Math.sqrt(pointer.vx * pointer.vx + pointer.vy * pointer.vy);
     cx = lerp(cx, pointer.x, 0.35);
     cy = lerp(cy, pointer.y, 0.35);
     crot += REDUCE_MOTION ? 0 : clamp(vel * 0.8 + 2, 2, 25);
     
     if (ninjaCursor) {
-      ninjaCursor.style.transform = `translate(${cx}px, ${cy}px) rotate(${crot}deg)`;
+      const scale = isClicking ? 0.75 : 1.0;
+      ninjaCursor.style.transform = `translate(${cx}px, ${cy}px) rotate(${crot}deg) scale(${scale})`;
+      ninjaCursor.style.transition = isClicking ? 'transform 0.05s ease' : 'transform 0.18s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
     }
 
     // 2. Draw FX Canvas
@@ -529,34 +556,52 @@
       });
       fx.shadowBlur = 0;
 
-      // Slashes
-      for (let i = slashes.length - 1; i >= 0; i--) {
-        const s = slashes[i];
-        s.r = lerp(s.r, s.maxR, 0.25);
-        s.life -= 0.045;
-        if (s.life <= 0) { slashes.splice(i, 1); continue; }
-        fx.beginPath();
-        fx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        fx.strokeStyle = `rgba(255, 30, 30, ${s.life})`;
-        fx.lineWidth = 3 * s.life;
-        fx.stroke();
+      // Katana Blade Slashes (Striking Beams)
+      if (slashes.length > 0) {
+        fx.shadowBlur = 16;
+        fx.shadowColor = '#FF2200';
+        for (let i = slashes.length - 1; i >= 0; i--) {
+          const s = slashes[i];
+          s.length = lerp(s.length, s.maxLength, 0.35);
+          s.life -= s.decay;
+          if (s.life <= 0) { slashes.splice(i, 1); continue; }
+
+          const halfL = s.length / 2;
+          const x1 = s.x - Math.cos(s.angle) * halfL;
+          const y1 = s.y - Math.sin(s.angle) * halfL;
+          const x2 = s.x + Math.cos(s.angle) * halfL;
+          const y2 = s.y + Math.sin(s.angle) * halfL;
+
+          fx.beginPath();
+          fx.moveTo(x1, y1);
+          fx.lineTo(x2, y2);
+          fx.strokeStyle = `rgba(255, 235, 190, ${s.life})`;
+          fx.lineWidth = s.width * s.life;
+          fx.lineCap = 'round';
+          fx.stroke();
+        }
       }
 
-      // Sparks
-      for (let i = sparks.length - 1; i >= 0; i--) {
-        const p = sparks[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vx *= 0.92;
-        p.vy *= 0.92;
-        p.vy += 0.15; // gravity
-        p.life -= p.decay;
-        if (p.life <= 0) { sparks.splice(i, 1); continue; }
-        fx.beginPath();
-        fx.arc(p.x, p.y, p.r * p.life, 0, Math.PI * 2);
-        fx.fillStyle = `rgba(255, 200, 50, ${p.life})`;
-        fx.fill();
+      // Sparks (Energy Explosion)
+      if (sparks.length > 0) {
+        fx.shadowBlur = 8;
+        fx.shadowColor = '#FF6600';
+        for (let i = sparks.length - 1; i >= 0; i--) {
+          const p = sparks[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vx *= 0.90;
+          p.vy *= 0.90;
+          p.vy += 0.12; // subtle gravity
+          p.life -= p.decay;
+          if (p.life <= 0) { sparks.splice(i, 1); continue; }
+          fx.beginPath();
+          fx.arc(p.x, p.y, p.r * p.life, 0, Math.PI * 2);
+          fx.fillStyle = `rgba(${p.color || '255, 200, 50'}, ${p.life})`;
+          fx.fill();
+        }
       }
+      fx.shadowBlur = 0;
     }
 
     requestAnimationFrame(tickFx);
