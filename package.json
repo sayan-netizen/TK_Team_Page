@@ -5,5 +5,8 @@
   "scripts": {
     "dev": "npx http-server ./shadow-dojo -o -p 3000"
   },
-  "dependencies": {}
+  "dependencies": {
+    "jsdom": "^27.0.1",
+    "sharp": "^0.35.3"
+  }
 }
