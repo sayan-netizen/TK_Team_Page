@@ -1124,7 +1124,7 @@ footer {
   align-items: center !important;
   position: relative !important;
   flex-shrink: 0 !important;
-  width: 250px !important;
+  width: 375px !important;
   padding: 1rem 0.8rem 1rem !important;
   
   background: transparent !important;
@@ -1140,7 +1140,7 @@ footer {
 
 /* Overlapping card deck layout - one card behind another */
 .member-card:not(:first-child) {
-  margin-left: -80px !important;
+  margin-left: -120px !important;
 }
 
 /* Stacking order and depth effect for stacked cards */
@@ -1181,8 +1181,8 @@ footer {
 /* Scaled Torii Placeholder for Bottom Left Layout */
 .torii-frame {
   position: relative !important;
-  width: 170px !important;
-  height: 215px !important;
+  width: 255px !important;
+  height: 322px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
