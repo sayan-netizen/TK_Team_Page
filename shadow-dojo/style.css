@@ -362,11 +362,11 @@ body {
   top: 50%;
   transform: translateY(-50%);
   width: 200px;
-  border-radius: 16px;
-  border: 1.5px solid rgba(248, 243, 230, 0.22);
-  background: rgba(44, 42, 38, 0.18);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   pointer-events: none;
   z-index: 1;
   /* height matches 1st card approximately */
@@ -1089,7 +1089,10 @@ footer {
 }
 
 #ts-active-text {
-  display: block !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  text-align: left !important;
   position: absolute !important;
   top: 60px !important;
   left: 5vw !important;
@@ -1104,29 +1107,14 @@ footer {
   position: absolute !important;
   top: 45% !important;
   bottom: auto !important;
-  left: auto !important;
   right: 5vw !important;
+  left: auto !important;
   transform: translateY(-50%) !important;
   display: flex !important;
   flex-direction: row !important;
-  justify-content: flex-start !important;
+  justify-content: flex-end !important;
   align-items: flex-end !important;
   flex-wrap: nowrap !important;
-  gap: 0 !important;
-  padding: 1.2rem 1.6rem !important;
-  
-  /* Ultra-transparent Glassmorphic Container */
-  background: rgba(255, 255, 255, 0.04) !important;
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  border-radius: 20px !important;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.22), inset 0 0 18px rgba(255, 255, 255, 0.06) !important;
-  
-  width: auto !important;
-  min-width: auto !important;
-  max-width: min(85vw, 920px) !important;
-  z-index: 50 !important;
 }
 
 /* Individual Member Cards with Glass Gradient Inside the Shared Box */
@@ -1139,17 +1127,12 @@ footer {
   width: 250px !important;
   padding: 1rem 0.8rem 1rem !important;
   
-  /* Translucent Frosted Glass Gradient */
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.12) 0%,
-    rgba(255, 255, 255, 0.03) 100%
-  ) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
-  border-radius: 16px !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18), inset 0 1px 1px rgba(255, 255, 255, 0.25) !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
   
   margin: 0 !important;
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, z-index 0.4s ease, filter 0.4s ease !important;
@@ -1180,14 +1163,10 @@ footer {
 .member-card:hover {
   z-index: 20 !important;
   transform: translateY(-16px) scale(1.05) !important;
-  filter: brightness(1.05) !important;
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.22) 0%,
-    rgba(255, 255, 255, 0.07) 100%
-  ) !important;
-  border-color: rgba(255, 255, 255, 0.35) !important;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28), inset 0 1px 2px rgba(255, 255, 255, 0.35) !important;
+  filter: brightness(1.15) !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 @keyframes float-torii {
@@ -1259,7 +1238,8 @@ footer {
   font-family: 'Shippori Mincho', serif !important;
   font-weight: 800 !important;
   font-size: 1.18rem !important;
-  color: #1D1B18 !important;
+  color: var(--void) !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85) !important;
   letter-spacing: 0.08em !important;
   margin-bottom: 0.25rem !important;
   white-space: nowrap !important;
@@ -1269,7 +1249,8 @@ footer {
   font-size: 0.72rem !important;
   letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
-  color: rgba(29, 27, 24, 0.6) !important;
+  color: rgba(247, 241, 229, 0.8) !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85) !important;
   white-space: nowrap !important;
 }
 
@@ -1314,6 +1295,8 @@ footer {
     right: auto !important;
     transform: none !important;
     max-width: 400px !important;
+    align-items: flex-start !important;
+    text-align: left !important;
   }
   #ts-active-members {
     right: 4vw !important;
